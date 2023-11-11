@@ -12,10 +12,11 @@ import javax.inject.Inject
 class DatabaseRepository @Inject constructor(private val rentexDao: RentexDao) {
 
 
-    fun get(): Flow<List<CarsModel>> =
+    suspend fun get(): Flow<List<CarsModel>> =
         rentexDao.getAllCars().flowOn(Dispatchers.IO).conflate()
 
 
+    suspend fun addCar(carModel: CarsModel) = rentexDao.addCar(carModel)
 
-
+    suspend fun deleteCar(carModel: CarsModel) = rentexDao.deleteSingleCar(carModel)
 }

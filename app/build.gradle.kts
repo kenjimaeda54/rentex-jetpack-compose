@@ -20,6 +20,18 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
+    }
+
+    sourceSets {
+        getByName("androidTest"){
+            assets.srcDirs(File(projectDir, "schemas"))
+        }
     }
 
     buildTypes {
@@ -53,6 +65,9 @@ android {
 
 dependencies {
 
+
+    //COIL
+    implementation("io.coil-kt:coil-compose:2.5.0")
 
     //GSON
     implementation ("com.google.code.gson:gson:2.9.0")

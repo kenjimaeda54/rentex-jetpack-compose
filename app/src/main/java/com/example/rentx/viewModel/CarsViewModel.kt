@@ -28,9 +28,12 @@ class CarsViewModel @Inject constructor(private val repository: DatabaseReposito
                 }
             }
         }
+
+
     }
 
 
-
-
+    fun addCar(carModel: CarsModel) = viewModelScope.launch {
+        repository.addCar(carModel)
+    }
 }
