@@ -1,6 +1,7 @@
 package com.example.rentx.viewModel
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rentx.model.CarsModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class CarsViewModel @Inject constructor(private val repository: DatabaseRepository) : ViewModel() {
     private val _carList = MutableStateFlow<List<CarsModel>>(emptyList())
     val cartList = _carList.asStateFlow()
+    val selectedCar = mutableStateOf<CarsModel?>(null)
 
     init {
         viewModelScope.launch {
@@ -29,11 +31,15 @@ class CarsViewModel @Inject constructor(private val repository: DatabaseReposito
             }
         }
 
-
     }
 
 
     fun addCar(carModel: CarsModel) = viewModelScope.launch {
         repository.addCar(carModel)
+    }
+
+
+    fun handleSelectedCar(carModel: CarsModel) {
+        selectedCar.value = carModel
     }
 }

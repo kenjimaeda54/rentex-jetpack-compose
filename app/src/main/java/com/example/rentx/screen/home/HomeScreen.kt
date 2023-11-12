@@ -3,6 +3,7 @@ package com.example.rentx.screen.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.rentx.R
 import com.example.rentx.model.AccessoriesModel
 import com.example.rentx.model.CarsModel
 import com.example.rentx.model.RentModel
+import com.example.rentx.route.RentexScreens
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
@@ -43,7 +46,7 @@ import com.example.rentx.viewModel.CarsViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel()) {
+fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: NavController) {
     val listCars = carsViewModel.cartList.collectAsState().value
 
 
@@ -83,7 +86,10 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel()) {
             contentPadding = it
         ) {
             items(listCars) { car ->
-                RowCar(carsModel = car)
+                RowCar(modifier = Modifier.clickable {
+                    carsViewModel.handleSelectedCar(car)
+                    navController.navigate(RentexScreens.DetailsScreen.name)
+                }, carsModel = car)
             }
 
         }
@@ -93,8 +99,3 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel()) {
 
 }
 
-@Preview
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen()
-}

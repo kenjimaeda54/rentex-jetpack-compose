@@ -26,7 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.example.rentx.R
 import com.example.rentx.model.CarsModel
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
@@ -34,9 +36,10 @@ import com.example.rentx.ui.theme.fontArchivo
 import com.example.rentx.utils.returnSvgIcon
 
 @Composable
-fun RowCar(carsModel: CarsModel) {
+fun RowCar(carsModel: CarsModel,modifier: Modifier = Modifier) {
+
     Row(
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 16.dp, vertical = 21.dp)
             .fillMaxWidth()
             .height(126.dp)
@@ -83,7 +86,7 @@ fun RowCar(carsModel: CarsModel) {
                     Icon(
                         modifier = Modifier.size(20.dp),
                         painter = painterResource(id = returnSvgIcon(carsModel.fuelType)),
-                        contentDescription = "Icone tipo de motor"
+                        contentDescription = "Icon type engine"
                     )
                 }
 
@@ -98,7 +101,7 @@ fun RowCar(carsModel: CarsModel) {
             model = ImageRequest.Builder(LocalContext.current).data(carsModel.thumbnail).build(),
             alignment = Alignment.BottomCenter,
             contentDescription = "Image row cars",
-            contentScale = ContentScale.Fit
+            contentScale = ContentScale.FillHeight
         )
 
     }

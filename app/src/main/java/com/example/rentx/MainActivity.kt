@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.rentx.route.RentexRoute
 import com.example.rentx.screen.home.HomeScreen
 import com.example.rentx.ui.theme.RentxTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             RentxTheme {
                 // A surface container using the 'background' color from the theme
-                HomeScreen()
+                RentexRoute()
             }
         }
     }
