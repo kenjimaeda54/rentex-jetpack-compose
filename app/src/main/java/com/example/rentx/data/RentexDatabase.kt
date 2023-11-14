@@ -38,11 +38,11 @@ import com.example.rentx.utils.ArrayListConverter
 //auto migration quando troco a versao do database e preciso manter os dados anteriores
 @Database(
     entities = [CarsModel::class,RentModel::class],
-    version = 11,
+    version = 12,
     autoMigrations = [
         AutoMigration(
-            from = 10,
-            to = 11,
+            from = 11,
+            to = 12,
          )
     ]
 )

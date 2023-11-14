@@ -65,6 +65,10 @@ android {
 
 dependencies {
 
+    //calendar
+    implementation ("io.github.boguszpawlowski.composecalendar:composecalendar:1.1.1")
+    implementation ("io.github.boguszpawlowski.composecalendar:kotlinx-datetime:1.1.1")
+
 
     //COIL
     implementation("io.coil-kt:coil-compose:2.5.0")

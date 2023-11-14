@@ -1,0 +1,126 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 12,
+    "identityHash": "983409fd72c7f07e306e0964ef09858d",
+    "entities": [
+      {
+        "tableName": "cars",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`carId` BLOB NOT NULL, `brand` TEXT NOT NULL, `name` TEXT NOT NULL, `about` TEXT NOT NULL, `fuel_type` TEXT NOT NULL, `thumbnail` TEXT NOT NULL, `accessoriesJson` TEXT NOT NULL, `photos` TEXT NOT NULL, `rentId` TEXT NOT NULL, `period` TEXT NOT NULL, `price` INTEGER NOT NULL, PRIMARY KEY(`carId`))",
+        "fields": [
+          {
+            "fieldPath": "carId",
+            "columnName": "carId",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "brand",
+            "columnName": "brand",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "about",
+            "columnName": "about",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fuelType",
+            "columnName": "fuel_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "thumbnail",
+            "columnName": "thumbnail",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "accessoriesJson",
+            "columnName": "accessoriesJson",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "photos",
+            "columnName": "photos",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rentModel.rentId",
+            "columnName": "rentId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rentModel.period",
+            "columnName": "period",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rentModel.price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "carId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "rent",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rentId` TEXT NOT NULL, `period` TEXT NOT NULL, `price` INTEGER NOT NULL, PRIMARY KEY(`rentId`))",
+        "fields": [
+          {
+            "fieldPath": "rentId",
+            "columnName": "rentId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "period",
+            "columnName": "period",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "rentId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '983409fd72c7f07e306e0964ef09858d')"
+    ]
+  }
+}

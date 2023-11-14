@@ -42,4 +42,8 @@ class CarsViewModel @Inject constructor(private val repository: DatabaseReposito
     fun handleSelectedCar(carModel: CarsModel) {
         selectedCar.value = carModel
     }
+
+    fun deleteCar(carModel: CarsModel) = viewModelScope.launch {
+        repository.deleteCar(carModel)
+    }
 }

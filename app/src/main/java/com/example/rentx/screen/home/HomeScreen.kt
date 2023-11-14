@@ -50,11 +50,58 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: Na
     val listCars = carsViewModel.cartList.collectAsState().value
 
 
+    val car = CarsModel(
+        brand = "Mitsubishi",
+        name = "Lancer",
+        about = "Mitsubishi Lancer é um belo e agressivo carro. Além do mais, ele encanta pelo conforto e pela eficiência. Bastante firme e estável para dirigir com tranquilidade e segurança.",
+        fuelType = "hybrid_motor",
+        rentModel =
+        RentModel(
+            period = "Ao dia",
+            price = 220
+        ),
+        thumbnail = "https://storage.googleapis.com/golden-wind/ignite/react-native/thumbnails/6.png",
+        accessoriesJson = arrayListOf(
+            AccessoriesModel(
+                type = "speed",
+                name = "180km/h"
+            ),
+            AccessoriesModel(
+                type = "acceleration",
+                name = "2.0s"
+            ),
+            AccessoriesModel(
+                type = "turning_diameter",
+                name = "600 HP"
+            ),
+            AccessoriesModel(
+
+                type = "hybrid_motor",
+                name = "Híbrido"
+            ),
+            AccessoriesModel(
+                type = "exchange",
+                name = "Auto"
+            ),
+            AccessoriesModel(
+                type = "seats",
+                name = "5 pessoas"
+            )
+        ),
+        photos = arrayListOf(
+            "https://storage.googleapis.com/golden-wind/ignite/react-native/images/15.png",
+            "https://storage.googleapis.com/golden-wind/ignite/react-native/images/16.png",
+            "https://storage.googleapis.com/golden-wind/ignite/react-native/images/17.png"
+
+        )
+    )
+
+
     Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
         Surface(
             Modifier
                 .height(113.dp)
-                .fillMaxSize(), color = colorsApp[ColorApp.Black100]!!
+                .fillMaxSize(), color =colorsApp[ColorApp.Black100]!!
         ) {
             Row(
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 26.dp),
@@ -76,6 +123,7 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: Na
             }
         }
     }) {
+
 
         LazyColumn(
             modifier = Modifier
