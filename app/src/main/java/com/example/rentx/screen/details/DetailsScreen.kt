@@ -41,7 +41,7 @@ import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
 import com.example.rentx.ui.theme.fontInter
-import com.example.rentx.utils.returnSvgIcon
+import com.example.rentx.utility.returnSvgIcon
 import com.example.rentx.view.buttonCommon.ButtonCommon
 import com.example.rentx.view.rowCar.Dots
 import com.example.rentx.view.rowDetailsCar.RowDetailsCar
@@ -131,7 +131,7 @@ fun DetailsScreen(parentEntry: CarsViewModel, navController: NavController) {
             Column {
                 parentEntry.selectedCar.value?.let {
                     Text(
-                        text = it.rentModel.period, fontFamily = fontArchivo,
+                        text = it.rent.period, fontFamily = fontArchivo,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Medium,
                         color = colorsApp[ColorApp.Gray100]!!
@@ -139,7 +139,7 @@ fun DetailsScreen(parentEntry: CarsViewModel, navController: NavController) {
                 }
                 parentEntry.selectedCar.value?.let {
                     Text(
-                        text = "R$ ${it.rentModel.price}", fontFamily = fontArchivo,
+                        text = "R$ ${it.rent.price}", fontFamily = fontArchivo,
                         fontSize = 25.sp,
                         fontWeight = FontWeight.Medium,
                         color = colorsApp[ColorApp.Red]!!
@@ -157,7 +157,7 @@ fun DetailsScreen(parentEntry: CarsViewModel, navController: NavController) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             parentEntry.selectedCar.value?.let {
-                items(it.accessoriesJson) { accessory ->
+                items(it.accessories) { accessory ->
                     RowDetailsCar(
                         idPainter = returnSvgIcon(accessory.type),
                         description = accessory.name

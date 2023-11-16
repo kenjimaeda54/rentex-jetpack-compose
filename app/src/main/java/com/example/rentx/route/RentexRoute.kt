@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.rentx.screen.details.DetailsScreen
 import com.example.rentx.screen.home.HomeScreen
-import com.example.rentx.screen.rentCar.ScheduleScreen
+import com.example.rentx.screen.schedules.ScheduleScreen
 import com.example.rentx.viewModel.CarsViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -30,8 +30,12 @@ fun RentexRoute() {
             DetailsScreen(parentViewModel, navController)
         }
 
-        composable(RentexScreens.ScheduleScreen.name) {
-            ScheduleScreen(navController)
+        composable(RentexScreens.ScheduleScreen.name) { entry ->
+            val parentEntry = remember(entry) {
+                navController.getBackStackEntry(RentexScreens.HomeScreen.name)
+            }
+            val parentViewModel = hiltViewModel<CarsViewModel>(parentEntry)
+            ScheduleScreen(navController, parentViewModel)
         }
     }
 }

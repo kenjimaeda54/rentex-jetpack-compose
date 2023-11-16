@@ -65,6 +65,13 @@ android {
 
 dependencies {
 
+
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+
     //calendar
     implementation ("io.github.boguszpawlowski.composecalendar:composecalendar:1.1.1")
     implementation ("io.github.boguszpawlowski.composecalendar:kotlinx-datetime:1.1.1")
@@ -91,20 +98,12 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    //Room
-    val roomVersion = "2.6.0"
-    implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
 
     //Cortines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
-    // To use Kotlin annottaiton processing toll (Kapt)
-    kapt("androidx.room:room-compiler:$roomVersion")
-
-
-    //Rom with coroutine
-    implementation("androidx.room:room-ktx:$roomVersion")
+   
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

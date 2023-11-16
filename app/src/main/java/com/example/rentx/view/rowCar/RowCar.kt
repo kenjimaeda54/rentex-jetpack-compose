@@ -2,7 +2,6 @@ package com.example.rentx.view.rowCar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,12 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -26,14 +23,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.rentx.R
 import com.example.rentx.model.CarsModel
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
-import com.example.rentx.utils.returnSvgIcon
+import com.example.rentx.utility.returnSvgIcon
 
 @Composable
 fun RowCar(carsModel: CarsModel,modifier: Modifier = Modifier) {
@@ -70,14 +65,14 @@ fun RowCar(carsModel: CarsModel,modifier: Modifier = Modifier) {
 
             Column {
                 Text(
-                    text = carsModel.rentModel.period, fontFamily = fontArchivo,
+                    text = carsModel.rent.period, fontFamily = fontArchivo,
                     fontWeight = FontWeight.Medium,
                     fontSize = 10.sp,
                     color = colorsApp[ColorApp.Gray100]!!
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "R$ ${carsModel.rentModel.price}", fontFamily = fontArchivo,
+                        text = "R$ ${carsModel.rent.price}", fontFamily = fontArchivo,
                         fontWeight = FontWeight.Medium,
                         fontSize = 15.sp,
                         color = colorsApp[ColorApp.Red]!!
@@ -85,7 +80,7 @@ fun RowCar(carsModel: CarsModel,modifier: Modifier = Modifier) {
                     Spacer(modifier = Modifier.width(30.dp))
                     Icon(
                         modifier = Modifier.size(20.dp),
-                        painter = painterResource(id = returnSvgIcon(carsModel.fuelType)),
+                        painter = painterResource(id = returnSvgIcon(carsModel.fuel_type)),
                         contentDescription = "Icon type engine"
                     )
                 }

@@ -1,41 +1,30 @@
 package com.example.rentx.viewModel
 
-import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.rentx.data.DataOrException
 import com.example.rentx.model.CarsModel
-import com.example.rentx.repository.DatabaseRepository
+import com.example.rentx.model.Schedules
+import com.example.rentx.repository.ApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CarsViewModel @Inject constructor(private val repository: DatabaseRepository) : ViewModel() {
-    private val _carList = MutableStateFlow<List<CarsModel>>(emptyList())
-    val cartList = _carList.asStateFlow()
-    val selectedCar = mutableStateOf<CarsModel?>(null)
+class CarsViewModel @Inject constructor(private val repository: ApiRepository) : ViewModel() {
+    var dataCars: MutableState<DataOrException<List<CarsModel>, Boolean, Exception>> =
+        mutableStateOf(DataOrException(null, true, Exception("")))
+    var selectedCar = mutableStateOf<CarsModel?>(null)
+    var dataSchedules: MutableState<DataOrException<Schedules, Boolean, Exception>> =
+        mutableStateOf(DataOrException(null, true, Exception("")))
 
-    init {
+    fun getAllCar() {
         viewModelScope.launch {
-            repository.get().distinctUntilChanged().collect {
-                if (it.isEmpty()) {
-                    Log.d("ListCars", "List is empty")
-                } else {
-                    _carList.value = it
-                }
-            }
+            dataCars.value = repository.getCars()
+            dataCars.value.loading = false
         }
-
-    }
-
-
-    fun addCar(carModel: CarsModel) = viewModelScope.launch {
-        repository.addCar(carModel)
     }
 
 
@@ -43,7 +32,12 @@ class CarsViewModel @Inject constructor(private val repository: DatabaseReposito
         selectedCar.value = carModel
     }
 
-    fun deleteCar(carModel: CarsModel) = viewModelScope.launch {
-        repository.deleteCar(carModel)
+    fun getSchedulesByCar(id: String) {
+        viewModelScope.launch {
+            dataSchedules.value = repository.getSchedulesByCar(id)
+            dataSchedules.value.loading = false
+        }
     }
+
+
 }

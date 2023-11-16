@@ -1,14 +1,13 @@
 package com.example.rentx.di
 
-import android.content.Context
-import androidx.room.Room
-import com.example.rentx.data.RentexDao
-import com.example.rentx.data.RentexDatabase
+import com.example.rentx.service.RentexServiceApi
+import com.example.rentx.utility.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
@@ -18,15 +17,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun rentexDatabase(@ApplicationContext context: Context): RentexDatabase = Room.databaseBuilder(
-        context,
-        RentexDatabase::class.java,
-        "rentex_db"
-    ).fallbackToDestructiveMigration().build()
-
-
-    @Singleton
-    @Provides
-    fun rentexDatabaseDao(rentexDatabase: RentexDatabase): RentexDao = rentexDatabase.RentexDao()
+    fun rentexServiceApi(): RentexServiceApi = Retrofit.Builder().baseUrl(Constants.baseUrl)
+        .addConverterFactory(GsonConverterFactory.create()).build()
+        .create(RentexServiceApi::class.java)
 
 }

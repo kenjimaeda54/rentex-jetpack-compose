@@ -1,4 +1,4 @@
-package com.example.rentx.utils
+package com.example.rentx.utility
 
 import com.example.rentx.R
 
