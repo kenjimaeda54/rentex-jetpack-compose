@@ -48,6 +48,7 @@ import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
 import com.example.rentx.ui.theme.fontInter
 import com.example.rentx.utility.ComposableLifecycle
+import com.example.rentx.view.buttonCommon.ButtonCommon
 import com.example.rentx.viewModel.CarsViewModel
 import io.github.boguszpawlowski.composecalendar.SelectableCalendar
 import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
@@ -162,13 +163,22 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                                 color = colorsApp[ColorApp.Gray200]!!
                             )
                             Spacer(modifier = Modifier.height(20.dp))
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.3f)
-                                    .height(1.dp),
-                                thickness = 0.5.dp,
-                                color = colorsApp[ColorApp.Gray200]!!
-                            )
+
+                            if (calendarState.selectionState.selection.isEmpty())
+                                Divider(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.3f)
+                                        .height(1.dp),
+                                    thickness = 0.5.dp,
+                                    color = colorsApp[ColorApp.Gray200]!!
+                                ) else
+                                Text(
+                                    text = calendarState.selectionState.selection[0].toString(),
+                                    fontFamily = fontInter,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 15.sp,
+                                    color = colorsApp[ColorApp.White]!!
+                                )
                         }
                         Image(
                             painter = painterResource(id = R.drawable.arrow_large),
@@ -183,13 +193,21 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                                 color = colorsApp[ColorApp.Gray200]!!
                             )
                             Spacer(modifier = Modifier.height(20.dp))
-                            Divider(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.5f)
-                                    .height(1.dp),
-                                thickness = 0.5.dp,
-                                color = colorsApp[ColorApp.Gray200]!!
-                            )
+                            if (calendarState.selectionState.selection.isEmpty())
+                                Divider(
+                                    modifier = Modifier
+                                        .fillMaxWidth(0.3f)
+                                        .height(1.dp),
+                                    thickness = 0.5.dp,
+                                    color = colorsApp[ColorApp.Gray200]!!
+                                ) else
+                                Text(
+                                    text = calendarState.selectionState.selection[calendarState.selectionState.selection.size - 1].toString(),
+                                    fontFamily = fontInter,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 15.sp,
+                                    color = colorsApp[ColorApp.White]!!
+                                )
                         }
                     }
                 }
@@ -197,12 +215,12 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
 
             }
         }) {
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Surface(modifier = Modifier.padding(vertical = 30.dp, horizontal = 9.dp)) {
+            Surface(modifier = Modifier.padding(it)) {
+                Column(
+                    modifier = Modifier
+                        .padding(vertical = 30.dp, horizontal = 9.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
                     SelectableCalendar(
                         calendarState = calendarState,
                         daysOfWeekHeader = { dayOfWeeks ->
@@ -357,7 +375,16 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                             }
                         }
                     )
+                    ButtonCommon(
+                        modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                        description = "Confirmar",
+                        action = { /*TODO*/ },
+                        enable = calendarState.selectionState.selection.isNotEmpty(),
+                        colorApp = colorsApp[ColorApp.Red]!!
+
+                    )
                 }
+
 
             }
         }
