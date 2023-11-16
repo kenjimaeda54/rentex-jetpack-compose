@@ -6,7 +6,7 @@ enum class RentexScreens {
     HomeScreen,
     DetailsScreen,
     ScheduleScreen,
-    DetailsPayment,
+    ScheduleDetailsScreen,
     FinishedScreen;
 
     companion object {
@@ -14,7 +14,7 @@ enum class RentexScreens {
             HomeScreen.name -> HomeScreen
             DetailsScreen.name -> DetailsScreen
             ScheduleScreen.name -> ScheduleScreen
-            DetailsPayment.name -> DetailsPayment
+            ScheduleDetailsScreen.name -> ScheduleDetailsScreen
             FinishedScreen.name -> FinishedScreen
             else -> throw IllegalArgumentException("Route $route is not recognizable")
         }

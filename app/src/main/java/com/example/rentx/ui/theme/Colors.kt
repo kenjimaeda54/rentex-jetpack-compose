@@ -3,7 +3,7 @@ package com.example.rentx.ui.theme
 import androidx.compose.ui.graphics.Color
 
 enum class ColorApp {
-    Black100, Gray100, Black200, Red, White, Gray200
+    Black100, Gray100, Black200, Red, White, Gray200,Green
 }
 
 
@@ -13,7 +13,8 @@ val colorsApp = mapOf(
     ColorApp.Red to Color(0xffdc1637),
     ColorApp.Gray100 to Color(0xFFC4C4C4),
     ColorApp.Gray200 to Color(0xFF7A7A80),
-    ColorApp.White to Color(0xFFFFFFFF)
+    ColorApp.White to Color(0xFFFFFFFF),
+    ColorApp.Green to Color(0xFF03b252),
 )
 
 

@@ -40,16 +40,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.example.rentx.R
+import com.example.rentx.route.RentexScreens
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
 import com.example.rentx.ui.theme.fontInter
 import com.example.rentx.utility.ComposableLifecycle
+import com.example.rentx.utility.formatDateTime
 import com.example.rentx.view.buttonCommon.ButtonCommon
 import com.example.rentx.viewModel.CarsViewModel
+import com.example.rentx.viewModel.ScheduleViewModel
 import io.github.boguszpawlowski.composecalendar.SelectableCalendar
 import io.github.boguszpawlowski.composecalendar.rememberSelectableCalendarState
 import io.github.boguszpawlowski.composecalendar.selection.DynamicSelectionState
@@ -68,12 +70,20 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel) {
+fun ScheduleScreen(
+    navController: NavController,
+    parentViewModel: CarsViewModel,
+    scheduleViewModel: ScheduleViewModel = hiltViewModel()
+) {
     val calendarState = rememberSelectableCalendarState(
         initialMonth = YearMonth.now(),
         selectionState = DynamicSelectionState(
             selectionMode = SelectionMode.Period,
-            selection = listOf(),
+            selection = scheduleViewModel.selectionDates.value,
+            confirmSelectionChange = {
+                scheduleViewModel.onSelectionChanged(it)
+                true
+            }
         )
     )
     val localBrazil = Locale("pt", "BR")
@@ -81,7 +91,7 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
 
     ComposableLifecycle { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
-            parentViewModel.selectedCar.value?.let { parentViewModel.getSchedulesByCar(it.id) }
+            parentViewModel.selectedCar.value?.let { scheduleViewModel.getSchedulesByCar(it.id) }
         }
 
     }
@@ -113,7 +123,7 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
     }
 
 
-    if (parentViewModel.dataSchedules.value.loading == true || parentViewModel.dataSchedules.value.exception != null) {
+    if (scheduleViewModel.dataSchedules.value.loading == true || scheduleViewModel.dataSchedules.value.exception != null) {
         Text(text = "loading")
     } else {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -173,7 +183,7 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                                     color = colorsApp[ColorApp.Gray200]!!
                                 ) else
                                 Text(
-                                    text = calendarState.selectionState.selection[0].toString(),
+                                    text = formatDateTime(calendarState.selectionState.selection[0]),
                                     fontFamily = fontInter,
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 15.sp,
@@ -202,7 +212,7 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                                     color = colorsApp[ColorApp.Gray200]!!
                                 ) else
                                 Text(
-                                    text = calendarState.selectionState.selection[calendarState.selectionState.selection.size - 1].toString(),
+                                    text = formatDateTime(calendarState.selectionState.selection[calendarState.selectionState.selection.size - 1]),
                                     fontFamily = fontInter,
                                     fontWeight = FontWeight.Medium,
                                     fontSize = 15.sp,
@@ -253,7 +263,7 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                         },
                         dayContent = { dayState ->
                             if (dayState.date.dayOfWeek == DayOfWeek.SUNDAY || dayState.date.dayOfWeek == DayOfWeek.SATURDAY || !dayState.isFromCurrentMonth ||
-                                (dayState.date.isBefore(LocalDate.now()) || !parentViewModel.dataSchedules.value.data?.unavailable_dates?.contains(
+                                (dayState.date.isBefore(LocalDate.now()) || !scheduleViewModel.dataSchedules.value.data?.unavailable_dates?.contains(
                                     dayState.date.toString()
                                 )!!)
                             ) {
@@ -376,9 +386,11 @@ fun ScheduleScreen(navController: NavController, parentViewModel: CarsViewModel)
                         }
                     )
                     ButtonCommon(
-                        modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 32.dp),
                         description = "Confirmar",
-                        action = { /*TODO*/ },
+                        action = { navController.navigate(RentexScreens.ScheduleDetailsScreen.name) },
                         enable = calendarState.selectionState.selection.isNotEmpty(),
                         colorApp = colorsApp[ColorApp.Red]!!
 

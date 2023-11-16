@@ -17,8 +17,7 @@ class CarsViewModel @Inject constructor(private val repository: ApiRepository) :
     var dataCars: MutableState<DataOrException<List<CarsModel>, Boolean, Exception>> =
         mutableStateOf(DataOrException(null, true, Exception("")))
     var selectedCar = mutableStateOf<CarsModel?>(null)
-    var dataSchedules: MutableState<DataOrException<Schedules, Boolean, Exception>> =
-        mutableStateOf(DataOrException(null, true, Exception("")))
+
 
     fun getAllCar() {
         viewModelScope.launch {
@@ -32,12 +31,7 @@ class CarsViewModel @Inject constructor(private val repository: ApiRepository) :
         selectedCar.value = carModel
     }
 
-    fun getSchedulesByCar(id: String) {
-        viewModelScope.launch {
-            dataSchedules.value = repository.getSchedulesByCar(id)
-            dataSchedules.value.loading = false
-        }
-    }
+
 
 
 }
