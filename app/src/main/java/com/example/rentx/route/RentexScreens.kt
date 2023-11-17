@@ -7,7 +7,7 @@ enum class RentexScreens {
     DetailsScreen,
     ScheduleScreen,
     ScheduleDetailsScreen,
-    FinishedScreen;
+    RentedCar;
 
     companion object {
         fun fromRoute(route: String): RentexScreens = when (route.substringBefore("/")) {
@@ -15,7 +15,7 @@ enum class RentexScreens {
             DetailsScreen.name -> DetailsScreen
             ScheduleScreen.name -> ScheduleScreen
             ScheduleDetailsScreen.name -> ScheduleDetailsScreen
-            FinishedScreen.name -> FinishedScreen
+            RentedCar.name -> RentedCar
             else -> throw IllegalArgumentException("Route $route is not recognizable")
         }
     }

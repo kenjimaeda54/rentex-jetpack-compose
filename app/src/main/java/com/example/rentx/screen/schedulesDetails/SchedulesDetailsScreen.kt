@@ -297,7 +297,7 @@ fun SchedulesDetailsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp, vertical = 24.dp),
                 description = "Alugar agora",
-                action = { navController.navigate(RentexScreens.ScheduleScreen.name) },
+                action = { navController.navigate(RentexScreens.RentedCar.name) },
                 colorApp = colorsApp[ColorApp.Green]!!
             )
         }
