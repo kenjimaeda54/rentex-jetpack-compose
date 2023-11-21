@@ -123,7 +123,7 @@ fun ScheduleScreen(
     }
 
 
-    if (scheduleViewModel.dataSchedules.value.loading == true || scheduleViewModel.dataSchedules.value.exception != null) {
+    if (scheduleViewModel.dataSchedulesModel.value.loading == true || scheduleViewModel.dataSchedulesModel.value.exception != null) {
         Text(text = "loading")
     } else {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -263,7 +263,7 @@ fun ScheduleScreen(
                         },
                         dayContent = { dayState ->
                             if (dayState.date.dayOfWeek == DayOfWeek.SUNDAY || dayState.date.dayOfWeek == DayOfWeek.SATURDAY || !dayState.isFromCurrentMonth ||
-                                (dayState.date.isBefore(LocalDate.now()) || !scheduleViewModel.dataSchedules.value.data?.unavailable_dates?.contains(
+                                (dayState.date.isBefore(LocalDate.now()) || scheduleViewModel.dataSchedulesModel.value.data?.unavailable_dates?.contains(
                                     dayState.date.toString()
                                 )!!)
                             ) {

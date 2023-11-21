@@ -1,6 +1,5 @@
 package com.example.rentx.screen.schedulesDetails
 
-import android.icu.util.Currency
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -38,7 +37,6 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,6 +44,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.rentx.R
+import com.example.rentx.model.ScheduleCar
+import com.example.rentx.model.ScheduleCarByUserModel
+import com.example.rentx.model.SchedulesModel
 import com.example.rentx.route.RentexScreens
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
@@ -58,6 +59,7 @@ import com.example.rentx.view.rowCar.Dots
 import com.example.rentx.view.rowDetailsCar.RowDetailsCar
 import com.example.rentx.viewModel.CarsViewModel
 import com.example.rentx.viewModel.ScheduleViewModel
+import com.example.rentx.viewModel.UserViewModel
 import java.text.NumberFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -67,7 +69,8 @@ import java.util.Locale
 fun SchedulesDetailsScreen(
     parentCarViewModel: CarsViewModel,
     navController: NavController,
-    parentScheduleViewModel: ScheduleViewModel
+    parentScheduleViewModel: ScheduleViewModel,
+    parentUserViewModel: UserViewModel,
 ) {
     var indexSelected by remember {
         mutableIntStateOf(0)
@@ -82,6 +85,61 @@ fun SchedulesDetailsScreen(
     )
     val currency = numberFormat.format(totalPrice)
 
+
+    fun handleSchedule() {
+        val mutableDatesSchedules =
+            parentScheduleViewModel.dataSchedulesModel.value.data?.unavailable_dates?.toMutableList()
+        for (date in parentScheduleViewModel.selectionDates.value) {
+            val formatDate = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val dateInString = formatDate.format(date)
+            mutableDatesSchedules?.add(dateInString)
+        }
+        val schedulesModel =
+            SchedulesModel(
+                id = parentCarViewModel.selectedCar.value?.id!!,
+                unavailable_dates = mutableDatesSchedules?.toList()!!
+            )
+
+        parentScheduleViewModel.updateDatesUnavailableDates(
+            carId = parentCarViewModel.selectedCar.value?.id!!,
+            schedulesModel
+        )
+
+        if (parentUserViewModel.dataSchedulesCarByUser.value.data?.id?.isNotEmpty() == true) {
+            val scheduleCarMutableList =
+                parentUserViewModel.dataSchedulesCarByUser.value.data!!.scheduleCar.toMutableList()
+            val scheduleCar = ScheduleCar(
+                car = parentCarViewModel.selectedCar.value!!,
+                endDate = formatDateTime(parentScheduleViewModel.selectionDates.value[parentScheduleViewModel.selectionDates.value.size - 1]),
+                startDate = formatDateTime(
+                    parentScheduleViewModel.selectionDates.value[0]
+                )
+            )
+            scheduleCarMutableList.add(scheduleCar)
+            val schedulesCarByUser = ScheduleCarByUserModel(
+                id = parentUserViewModel.token.value,
+                scheduleCar = scheduleCarMutableList.toList()
+            )
+            parentUserViewModel.updateSchedulesCarByUser(schedulesCarByUser)
+        } else {
+            val schedulesCarByUser = ScheduleCarByUserModel(
+                id = parentUserViewModel.token.value,
+                scheduleCar = listOf(
+                    ScheduleCar(
+                        car = parentCarViewModel.selectedCar.value!!,
+                        endDate = formatDateTime(parentScheduleViewModel.selectionDates.value[parentScheduleViewModel.selectionDates.value.size - 1]),
+                        startDate = formatDateTime(
+                            parentScheduleViewModel.selectionDates.value[0]
+                        )
+                    )
+                )
+            )
+            parentUserViewModel.createScheduleCarByUser(schedulesCarByUser)
+
+        }
+
+        navController.navigate(RentexScreens.HomeScreen.name)
+    }
 
     Column(
         modifier = Modifier
@@ -297,7 +355,7 @@ fun SchedulesDetailsScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp, vertical = 24.dp),
                 description = "Alugar agora",
-                action = { navController.navigate(RentexScreens.RentedCar.name) },
+                action = { handleSchedule() },
                 colorApp = colorsApp[ColorApp.Green]!!
             )
         }

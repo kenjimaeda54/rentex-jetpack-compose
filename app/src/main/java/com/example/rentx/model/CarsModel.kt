@@ -8,7 +8,6 @@ data class CarsModel(
     val id: String,
     val name: String,
     val photos: List<String>,
-    val rent: Rent,
-    val thumbnail: String
-
-)
+    val rent: RentModel,
+    val thumbnail: String,
+    )

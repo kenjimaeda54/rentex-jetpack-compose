@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,12 +36,17 @@ import com.example.rentx.ui.theme.fontInter
 import com.example.rentx.utility.ComposableLifecycle
 import com.example.rentx.view.rowCar.RowCar
 import com.example.rentx.viewModel.CarsViewModel
+import com.example.rentx.viewModel.UserViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: NavController) {
+fun HomeScreen(
+    carsViewModel: CarsViewModel = hiltViewModel(),
+    navController: NavController,
+    userViewModel: UserViewModel = hiltViewModel()
+) {
 
     ComposableLifecycle { _, event ->
         if (event == Lifecycle.Event.ON_CREATE) {
@@ -93,7 +102,7 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: Na
 //    )
 
 
-    if(carsViewModel.dataCars.value.loading!! || carsViewModel.dataCars.value.exception != null ){
+    if (carsViewModel.dataCars.value.loading!! || carsViewModel.dataCars.value.exception != null || carsViewModel.dataCars.value.data == null) {
         Text(text = "loading")
     } else {
         Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
@@ -123,8 +132,23 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: Na
                 }
 
             }
+        }, floatingActionButton = {
+            if (userViewModel.dataSchedulesCarByUser.value.data?.id?.isNotEmpty() == true && userViewModel.dataSchedulesCarByUser.value.exception == null) {
+                SmallFloatingActionButton(
+                    modifier = Modifier.size(60.dp),
+                    onClick = { /*TODO*/ },
+                    shape = CircleShape,
+                    containerColor = colorsApp[ColorApp.Red]!!
+                ) {
+                    Icon(
+                        modifier = Modifier.size(32.dp),
+                        painter = painterResource(id = R.drawable.car_icon),
+                        contentDescription = "Car icon",
+                        tint = colorsApp[ColorApp.White]!!
+                    )
+                }
+            }
         }) {
-
 
             LazyColumn(
                 modifier = Modifier
@@ -142,6 +166,7 @@ fun HomeScreen(carsViewModel: CarsViewModel = hiltViewModel(), navController: Na
                 }
 
             }
+
 
         }
     }

@@ -1,6 +1,6 @@
 package com.example.rentx.model
 
-data class Schedules(
+data class SchedulesModel(
     val id: String,
     val unavailable_dates: List<String>
 )

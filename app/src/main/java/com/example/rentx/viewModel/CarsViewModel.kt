@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rentx.data.DataOrException
 import com.example.rentx.model.CarsModel
-import com.example.rentx.model.Schedules
 import com.example.rentx.repository.ApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
