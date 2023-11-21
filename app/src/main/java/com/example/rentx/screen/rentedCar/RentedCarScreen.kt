@@ -1,5 +1,7 @@
 package com.example.rentx.screen.rentedCar
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,14 +29,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import com.example.rentx.R
+import com.example.rentx.model.ScheduleCar
+import com.example.rentx.model.ScheduleCarByUserModel
+import com.example.rentx.model.SchedulesModel
+import com.example.rentx.route.RentexScreens
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
 import com.example.rentx.ui.theme.fontArchivo
 import com.example.rentx.ui.theme.fontInter
+import com.example.rentx.utility.ComposableLifecycle
+import com.example.rentx.utility.formatDateTime
+import com.example.rentx.viewModel.CarsViewModel
+import com.example.rentx.viewModel.ScheduleViewModel
+import com.example.rentx.viewModel.UserViewModel
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RentedCarScreen() {
+fun RentedCarScreen(navController: NavController) {
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +97,7 @@ fun RentedCarScreen() {
         Spacer(modifier = Modifier.weight(1f))
         Button(
             modifier = Modifier.padding(bottom = 50.dp),
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(RentexScreens.HomeScreen.name) },
             shape = RectangleShape,
             contentPadding = PaddingValues(vertical = 19.dp, horizontal = 21.dp),
             colors = ButtonDefaults.buttonColors(
@@ -92,8 +109,3 @@ fun RentedCarScreen() {
     }
 }
 
-@Preview
-@Composable
-fun RentedCarScreenPreview() {
-    RentedCarScreen()
-}

@@ -35,7 +35,7 @@ fun RowCar(carsModel: CarsModel,modifier: Modifier = Modifier) {
 
     Row(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 21.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .height(126.dp)
             .background(colorsApp[ColorApp.White]!!, shape = RoundedCornerShape(3.dp)),

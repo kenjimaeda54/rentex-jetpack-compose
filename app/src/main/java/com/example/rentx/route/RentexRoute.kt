@@ -13,6 +13,7 @@ import com.example.rentx.screen.home.HomeScreen
 import com.example.rentx.screen.rentedCar.RentedCarScreen
 import com.example.rentx.screen.schedules.ScheduleScreen
 import com.example.rentx.screen.schedulesDetails.SchedulesDetailsScreen
+import com.example.rentx.screen.yourSchedules.ScheduleCarsScreen
 import com.example.rentx.viewModel.CarsViewModel
 import com.example.rentx.viewModel.ScheduleViewModel
 import com.example.rentx.viewModel.UserViewModel
@@ -52,11 +53,20 @@ fun RentexRoute() {
             val parentCarViewModel = hiltViewModel<CarsViewModel>(parentEntryHome)
             val parentScheduleViewModel = hiltViewModel<ScheduleViewModel>(parentEntrySchedule)
             val parentEntryHomeUserViewModel = hiltViewModel<UserViewModel>(parentEntryHome)
-            SchedulesDetailsScreen(parentCarViewModel, navController, parentScheduleViewModel,parentEntryHomeUserViewModel)
+            SchedulesDetailsScreen(
+                parentCarViewModel,
+                navController,
+                parentScheduleViewModel,
+                parentEntryHomeUserViewModel
+            )
         }
 
         composable(RentexScreens.RentedCar.name) {
-            RentedCarScreen()
+            RentedCarScreen(navController)
+        }
+
+        composable(RentexScreens.ScheduleCarsScreen.name) {
+            ScheduleCarsScreen()
         }
     }
 }

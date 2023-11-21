@@ -138,7 +138,7 @@ fun SchedulesDetailsScreen(
 
         }
 
-        navController.navigate(RentexScreens.HomeScreen.name)
+        navController.navigate(RentexScreens.RentedCar.name)
     }
 
     Column(

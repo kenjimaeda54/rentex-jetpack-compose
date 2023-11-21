@@ -136,7 +136,7 @@ fun HomeScreen(
             if (userViewModel.dataSchedulesCarByUser.value.data?.id?.isNotEmpty() == true && userViewModel.dataSchedulesCarByUser.value.exception == null) {
                 SmallFloatingActionButton(
                     modifier = Modifier.size(60.dp),
-                    onClick = { /*TODO*/ },
+                    onClick = { navController.navigate(RentexScreens.ScheduleCarsScreen.name) },
                     shape = CircleShape,
                     containerColor = colorsApp[ColorApp.Red]!!
                 ) {
@@ -162,7 +162,7 @@ fun HomeScreen(
                     RowCar(modifier = Modifier.clickable {
                         carsViewModel.handleSelectedCar(car)
                         navController.navigate(RentexScreens.DetailsScreen.name)
-                    }, carsModel = car)
+                    }.padding(vertical = 16.dp), carsModel = car)
                 }
 
             }
