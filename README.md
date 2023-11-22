@@ -1,10 +1,10 @@
 # Rentex
-Aplicativo de aluguel de carro, consegue visualizar carros e datas disponiveis para aluguel. Possui tambem descricao de cada carro e seus respectivos carros agendados
+Aplicativo de aluguel de carro, consegue visualizar carros,   é datas disponíveis para aluguel. Possui também descrição de cada carro e seus respectivos carros agendados
 
 ## Feature
-- No inicio o pensamento foi salvar os dados no Room depois foi implementei via backend
-- Para salvar uma tabela room dentro de outra tabela usamos o Embeded , tambem possui outros [relacoes](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)_
-- Para salvar um data class pode [converter](console.firebase.google.com/project/company-travel/authentication/providers?hl=pt-br) em json
+- No início o pensamento foi salvar os dados no Room, depois foi implementado via backend
+- Para salvar uma tabela Room em outra usamos o Embeded , também possui outras [relações](https://medium.com/androiddevelopers/database-relations-with-room-544ab95e4542)_
+- Para salvar uma data class pode [converter](console.firebase.google.com/project/company-travel/authentication/providers?hl=pt-br) em json
 
 ```kotlin
 @Entity(tableName = "cars")
@@ -68,7 +68,36 @@ class ArrayListConverter {
 ```
 ##
 
-- 
+- Alguns hacker que ajuda construir app
+
+```kotlin
+
+//para trabalhar com dots
+@Composable
+fun Dots(colorApp: Color,modifier: Modifier = Modifier) {
+    Canvas(modifier = modifier.size(6.dp)) {
+        drawCircle(
+            color = colorApp
+        )
+    }
+}
+
+// trabalhar com moeda
+val localBrazil = Locale("pt", "BR")
+val numberFormat = NumberFormat.getCurrencyInstance(localBrazil)
+val currency = numberFormat.format(totalPrice)
+
+//trabalhar com data
+val formatDateTime = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+val formatString = formatDateTime.format(date)
+
+//multiplicar valores quando e opcional ideal e usar times
+parentCarViewModel.selectedCar.value?.rent?.price?.times(
+        parentScheduleViewModel.selectionDates.value.size
+    )
+
+```
+
 
 
 
