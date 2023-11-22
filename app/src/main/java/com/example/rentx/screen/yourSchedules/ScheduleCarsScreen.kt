@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.rentx.R
 import com.example.rentx.ui.theme.ColorApp
 import com.example.rentx.ui.theme.colorsApp
@@ -51,7 +53,7 @@ import java.util.Locale
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScheduleCarsScreen(userViewModel: UserViewModel = hiltViewModel()) {
+fun ScheduleCarsScreen(userViewModel: UserViewModel = hiltViewModel(),navController: NavController) {
 
 
     if (userViewModel.dataSchedulesCarByUser.value.loading == true || userViewModel.dataSchedulesCarByUser.value.exception != null) {
@@ -76,7 +78,7 @@ fun ScheduleCarsScreen(userViewModel: UserViewModel = hiltViewModel()) {
                         verticalArrangement = Arrangement.SpaceBetween
                     ) {
                         Image(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier.size(24.dp).clickable { navController.popBackStack() },
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = "Button Back",
                             colorFilter = ColorFilter.tint(color = colorsApp[ColorApp.White]!!)
@@ -109,7 +111,7 @@ fun ScheduleCarsScreen(userViewModel: UserViewModel = hiltViewModel()) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 14.dp),
+                        .padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
