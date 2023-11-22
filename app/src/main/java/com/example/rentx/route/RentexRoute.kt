@@ -66,7 +66,7 @@ fun RentexRoute() {
         }
 
         composable(RentexScreens.ScheduleCarsScreen.name) {
-            ScheduleCarsScreen()
+            ScheduleCarsScreen(navController = navController)
         }
     }
 }
